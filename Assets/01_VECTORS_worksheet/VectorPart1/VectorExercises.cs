@@ -1,3 +1,4 @@
+using System.Net;
 using UnityEngine;
 
 public class VectorExercises : MonoBehaviour
@@ -11,15 +12,20 @@ public class VectorExercises : MonoBehaviour
     private Vector2 startPt;
     private Vector2 endPt;
 
+    private Vector3 endPoint;
+
     public float GameWidth, GameHeight;
-    private float minX, minY, maxX, maxY;
+    private float minX = -5, minY = -5, maxX = 5, maxY = 5;
 
     private void Start()
     {
         if (Q2a)
             Question2a();
         if (Q2b)
+        {
+            CalculateGameDimensions();
             Question2b(20);
+        }
         if (Q2d)
             Question2d();
         if (Q2e)
@@ -36,41 +42,68 @@ public class VectorExercises : MonoBehaviour
 
     public void CalculateGameDimensions()
     {
+        GameHeight = Camera.main.orthographicSize * 2f;  //Gets orthographic size of camera (distance from center to top of screen)
+                                                         //and multiplies it by 2 to get the height of the game
+        GameWidth = Camera.main.aspect * GameHeight; //Gets the aspect ratio of the camera (width / height)
+                                                     //and multiplies it by the game height which gives the width
 
+        maxX = GameWidth / 2;
+        maxY = GameHeight / 2;
+        minX = -maxX;
+        minY = -maxY;
     }
 
     void Question2a()
     {
+        startPt = new Vector2(0, 0);
+        endPt = new Vector2(2, 3);
 
+        drawnLine = lineFactory.GetLine(startPt, endPt, 0.02f, Color.black);
+
+        drawnLine.EnableDrawing(true);
+
+        Vector2 vec2 = endPt - startPt;
+
+        Debug.Log("Magnitude = " + vec2.magnitude);
     }
 
     void Question2b(int n)
     {
+        for (int i = 1; i <= n; i++)
+        {
+            startPt = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+            endPt = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
 
+            drawnLine = lineFactory.GetLine(startPt, endPt, 0.02f, Color.black);
+
+            drawnLine.EnableDrawing(true);
+        }
     }
 
     void Question2d()
     {
-
+        DebugExtension.DebugArrow(
+            new Vector3(0, 0 ,0),
+            new Vector3(5, 5, 0),
+            Color.red,
+            60f);  //Lifespan of the shape in seconds
     }
 
     void Question2e(int n)
     {
         for (int i = 0; i < n; i++)
         {
-            startPt = new Vector2(
-                Random.Range(-maxX, maxX), 
-                Random.Range(-maxY, maxY));
+            endPoint = new Vector3(
+                Random.Range(-maxX, maxX),
+                Random.Range(-maxY, maxY),
+                Random.Range(-maxX, maxX));
 
-            // Your code here
-            // ...
-
-            //DebugExtension.DebugArrow(
-            //    new Vector3(0, 0, 0),
-            //    // Your code here,
-            //    Color.white,
-            //    60f);
-        }  
+            DebugExtension.DebugArrow(
+                new Vector3(0, 0, 0),
+                endPoint,
+                Color.white,
+                60f);
+        }
     }
 
     public void Question3a()
