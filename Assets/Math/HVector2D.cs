@@ -63,15 +63,20 @@ public class HVector2D
         y /= mag;
     }
 
-    /*public float DotProduct()
+    public float DotProduct(HVector2D vec)
     {
+        return x * vec.x + y * vec.y;
+    }
 
-    }*/
+    public HVector2D Projection(HVector2D b)
+    {
+        HVector2D proj = b * (DotProduct(b) / b.DotProduct(b)); //DotProduct(b) calculates dot product of c and b
+                                                                //b.DotProduct(b) calculates the magnitude squared of vector b
+                                                                //The division of these two gives the scalar of the projected vector
+                                                                //and by multiplying the scalar by vector b gives the projected vector
 
-    // public HVector2D Projection(/*???*/)
-    // {
-
-    // }
+        return proj;
+    }
 
     // public float FindAngle(/*???*/)
     // {
