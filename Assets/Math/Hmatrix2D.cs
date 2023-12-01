@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HMatrix2D
 {
-    public float[,] Entries { get; set; } = new float[3, 3];
+    public float[,] Entries { get; set; } = new float[3,3];
     
     public HMatrix2D()
     {
@@ -17,12 +17,11 @@ public class HMatrix2D
         if (multiArray.GetLength(0) == 3 && multiArray.GetLength(1) == 3)  //Checks if the array representing the matrix is 3x3
                                                                            //GetLength(0) checks rows, GetLength(1) checks columns
         {
-            // Assign the elements of multiArray to the entries property
             for (int y = 0; y < 3; y++)
             {
                 for (int x = 0; x < 3; x++)
                 {
-                    Entries[y, x] = multiArray[y, x];  //Copies elements from multiArray to Entries
+                    Entries[y,x] = multiArray[y,x];  //Copies elements from multiArray to Entries
                 }
             }
         }
@@ -51,63 +50,148 @@ public class HMatrix2D
         Entries[2,1] = m21;
         Entries[2,2] = m22;
     }
-    /*
+    
     public static HMatrix2D operator +(HMatrix2D left, HMatrix2D right)
     {
-        return // your code here
-    }
+        HMatrix2D result = new HMatrix2D();  //Creates new HMatrix named "result" to store the result
 
+        //Iterate over each element
+        for (int y = 0; y < 3; y++)
+        {
+            for (int x = 0; x < 3; x++)
+            {
+                result.Entries[y,x] = left.Entries[y,x] + right.Entries[y,x];  //Adds values of elements of left and right matrix in each space
+                                                                                  //and sets the calculated value to the corresponding element in result matrix
+            }
+        }
+
+        return result;
+    }
+    
     public static HMatrix2D operator -(HMatrix2D left, HMatrix2D right)
     {
-        return // your code here
+        HMatrix2D result = new HMatrix2D();  //Creates new HMatrix named "result" to store the result
+
+        //Iterate over each element
+        for (int y = 0; y < 3; y++)
+        {
+            for (int x = 0; x < 3; x++)
+            {
+                result.Entries[y,x] = left.Entries[y,x] - right.Entries[y,x];  //Subtracts values of elements of the right matrix from the left matrix in each space
+                                                                                  //and sets the calculated value to the corresponding element in result matrix
+            }
+        }
+
+        return result;
     }
 
     public static HMatrix2D operator *(HMatrix2D left, float scalar)
     {
-        return // your code here
-    }
+        HMatrix2D result = new HMatrix2D();  //Creates new HMatrix named "result" to store the result
 
-    // Note that the second argument is a HVector2D object
-    //
+        //Iterate over each element
+        for (int y = 0; y < 3; y++)
+        {
+            for (int x = 0; x < 3; x++)
+            {
+                result.Entries[y,x] = left.Entries[y,x] * scalar;  //Multiplies values of elements of the matrix with the scalar value
+                                                                   //and sets the calculated value to the corresponding element in result matrix
+            }
+        }
+
+        return result;
+    }
+    
+
+    //HMatrix2D and HVector2D multiplication
     public static HVector2D operator *(HMatrix2D left, HVector2D right)
     {
-        return // your code here
+        return new HVector2D
+        (
+            (left.Entries[0,0] * right.x) + (left.Entries[0,1] * right.y) + (left.Entries[0,2] * right.h),
+            (left.Entries[1,0] * right.x) + (left.Entries[1,1] * right.y) + (left.Entries[1,2] * right.h)
+        );
     }
 
-    // Note that the second argument is a HMatrix2D object
-    //
+    //HMatrix2D and HMatrix2D multiplication
     public static HMatrix2D operator *(HMatrix2D left, HMatrix2D right)
     {
         return new HMatrix2D
         (
+            //Row 1 Column 1
             /* 
                 00 01 02    00 xx xx
                 xx xx xx    10 xx xx
                 xx xx xx    20 xx xx
                 */
-            //left.Entries[0, 0] * right.Entries[0, 0] + left.Entries[0, 1] * right.Entries[1, 0] + left.Entries[0, 2] * right.Entries[2, 0],
+            left.Entries[0, 0] * right.Entries[0, 0] + left.Entries[0, 1] * right.Entries[1, 0] + left.Entries[0, 2] * right.Entries[2, 0],
 
+            //Row 1 Column 2
             /* 
                 00 01 02    xx 01 xx
                 xx xx xx    xx 11 xx
                 xx xx xx    xx 21 xx
                 */
-            //left.Entries[0, 0] * right.Entries[0, 1] + left.Entries[0, 1] * right.Entries[1, 1] + left.Entries[0, 2] * right.Entries[2, 1],
+            left.Entries[0, 0] * right.Entries[0, 1] + left.Entries[0, 1] * right.Entries[1, 1] + left.Entries[0, 2] * right.Entries[2, 1],
 
-        // and so on for another 7 entries
-    /*);
+            //Row 1 Column 3
+            left.Entries[0, 0] * right.Entries[0, 2] + left.Entries[0, 1] * right.Entries[1, 2] + left.Entries[0, 2] * right.Entries[2, 2],
+
+            //Row 2 Column 1
+            left.Entries[1, 0] * right.Entries[0, 0] + left.Entries[1, 1] * right.Entries[1, 0] + left.Entries[1, 2] * right.Entries[2, 0],
+
+            //Row 2 Column 2
+            left.Entries[1, 0] * right.Entries[0, 1] + left.Entries[1, 1] * right.Entries[1, 1] + left.Entries[1, 2] * right.Entries[2, 1],
+
+            //Row 2 Column 3
+            left.Entries[1, 0] * right.Entries[0, 2] + left.Entries[1, 1] * right.Entries[1, 2] + left.Entries[1, 2] * right.Entries[2, 2],
+
+            //Row 3 Column 1
+            left.Entries[2, 0] * right.Entries[0, 0] + left.Entries[2, 1] * right.Entries[1, 0] + left.Entries[2, 2] * right.Entries[2, 0],
+
+            //Row 3 Column 2
+            left.Entries[2, 0] * right.Entries[0, 1] + left.Entries[2, 1] * right.Entries[1, 1] + left.Entries[2, 2] * right.Entries[2, 1],
+
+            //Row 3 Column 3
+            left.Entries[2, 0] * right.Entries[0, 2] + left.Entries[2, 1] * right.Entries[1, 2] + left.Entries[2, 2] * right.Entries[2, 2]
+        );
     }
+    
 
     public static bool operator ==(HMatrix2D left, HMatrix2D right)
     {
-        // your code here
+        //Iterate over each element
+        for (int y = 0; y < 3; y++)
+        {
+            for (int x = 0; x < 3; x++)
+            {
+                if (left.Entries[y, x] != right.Entries[y, x])  //Check if values in the same element are not equal
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;  //Return true if equal
     }
 
     public static bool operator !=(HMatrix2D left, HMatrix2D right)
     {
-        // your code here
-    }
+        //Iterate over each element
+        for (int y = 0; y < 3; y++)
+        {
+            for (int x = 0; x < 3; x++)
+            {
+                if (left.Entries[y, x] == right.Entries[y, x])  //Check if values in the same element are equal
+                {
+                    return false;
+                }
+            }
+        }
 
+        return true;  //Return true if not equal
+    }
+    /*
     public override bool Equals(object obj)
     {
         // your code here
