@@ -19,23 +19,23 @@ public class Mario : MonoBehaviour
 
     void FixedUpdate()
     {
-        gravityDir = (planet.position - transform.position);
+        gravityDir = (planet.position - transform.position);  //Calculates gravity vector
 
-        moveDir = new Vector3(gravityDir.y, -gravityDir.x, 0f);
-        moveDir = moveDir.normalized * -1f;
+        moveDir = new Vector3(gravityDir.y, -gravityDir.x, 0f);  //Calculates move direction using perpendicular value of gravity
+        moveDir = moveDir.normalized * -1f;  //Normalize move vector to get unit vector (direction)
 
-        rb.AddForce(moveDir * force);
+        rb.AddForce(moveDir * force);  //Apply force to astronaut using moveDir unit vector multiplied by force scalar
 
-        gravityNorm = gravityDir.normalized;
-        rb.AddForce(gravityNorm * gravityStrength);
+        gravityNorm = gravityDir.normalized;  //Normalize gravity vector to get unit vector (direction)
+        rb.AddForce(gravityNorm * gravityStrength);  //Apply gravity force to astronaut using gravityNorm unit vector multiplied by scalar gravity strength
 
+        float angle = Vector3.SignedAngle(Vector3.right, moveDir, Vector3.forward);  //Calculates angle between x axis (Vector3.right) and move direction,
+                                                                                     //along the perspective of the z axis
 
-        float angle = Vector3.SignedAngle(transform.position, moveDir, Vector3.forward);
+        rb.MoveRotation(Quaternion.Euler(0, 0, angle));  //Rotate the sprite along the z axis
 
-        rb.MoveRotation(Quaternion.Euler(0, 0, angle));
-
-        DebugExtension.DebugArrow(transform.position, gravityDir, Color.red); //Gravity
-        DebugExtension.DebugArrow(transform.position, moveDir, Color.blue); //Move Direction
+        DebugExtension.DebugArrow(transform.position, gravityDir, Color.red); //Gravity vector arrow
+        DebugExtension.DebugArrow(transform.position, moveDir, Color.blue); //Move Direction vector arrow
     }
 }
 

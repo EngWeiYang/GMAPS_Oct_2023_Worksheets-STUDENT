@@ -9,19 +9,19 @@ public class JumpToHeight : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        void Jump()
-        {
+        //void Jump()
+        //{
             // v*v = u*u + 2as;
             // u*u = v*v - 2as;
             // u = sqrt(v*v - 2as);
             // v = 0, u = ?, a = Physics.gravity, s = 
 
             /*float u = Mathf.Sqrt();*/
-            rb.velocity = new Vector3(/*your code here*/);
+            //rb.velocity = new Vector3(/*your code here*/);
 
             //float jumpForce = Mathf.Sqrt(-2 * Physics2D.gravity.y * Height);
             //rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
-        }
+        //}
     }
     
     private void Update()

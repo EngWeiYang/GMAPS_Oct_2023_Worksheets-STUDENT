@@ -7,15 +7,19 @@ public class Player : MonoBehaviour
     public bool IsCaptain = true;
     public Player OtherPlayer;
 
-    //float Magnitude(Vector3 vector)
-    //{
-    //    // Your code here
-    //}
+    float Magnitude(Vector3 vector)
+    {
+        float magnitude = Mathf.Sqrt(vector.x * vector.x + vector.y * vector.y);
+        return magnitude;
+    }
 
-    //Vector3 Normalise(Vector3 vector)
-    //{
-    //    // Your code here
-    //}
+    Vector3 Normalise(Vector3 vector)
+    {
+        float mag = Magnitude(vector);
+        Vector3 vecNormalised = vector / mag;
+
+        return vecNormalised;
+    }
 
     //float Dot(Vector3 vectorA, Vector3 vectorB)
     //{
@@ -70,7 +74,12 @@ public class Player : MonoBehaviour
     {
         if (IsCaptain)
         {
-            //float angle = // Your code here
+            Vector3 CaptainToPlayer1 = (transform.position - OtherPlayer.transform.position) * -1f;  //Captain to player 1 vector calculation
+            DebugExtension.DebugArrow(transform.position, Normalise(CaptainToPlayer1), Color.black);  //Black arrow from captain to player
+
+            DebugExtension.DebugArrow(transform.position, transform.forward, Color.blue);  //Blue arrow to show captain's forward vector (facing direction)
+
+            float angle = Vector3.SignedAngle(transform.forward, CaptainToPlayer1, Vector3.up);
             //Debug.Log(angle);
         }
     }
