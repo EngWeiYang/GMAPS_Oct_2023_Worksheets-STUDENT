@@ -93,8 +93,16 @@ public class HVector2D
         return new Vector3(x, y);
     }
 
-    // public void Print()
-    // {
+    public void Print()
+    {
+        string result = "";
 
-    // }
+        result += x;
+        result += "\n";
+        result += y;
+        result += "\n";
+        result += h;
+
+        Debug.Log(result);
+    }
 }
