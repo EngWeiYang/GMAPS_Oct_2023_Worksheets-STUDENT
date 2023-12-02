@@ -30,9 +30,6 @@ public class TestMatrix : MonoBehaviour
         // Matrix multiplication
         resultMat = mat1 * mat2;
 
-        //Debug.Log(vec1);
-        //Debug.Log(resultMat);
-
         vec1.Print();
         resultMat.Print();
     }
