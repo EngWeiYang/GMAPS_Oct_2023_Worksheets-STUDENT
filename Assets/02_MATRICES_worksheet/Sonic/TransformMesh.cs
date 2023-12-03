@@ -38,15 +38,15 @@ public class TransformMesh : MonoBehaviour
     
     void Rotate(float angle)
     {
-        toOriginMatrix.setTranslationMat(-pos.x, -pos.y);
-        fromOriginMatrix.setTranslationMat(pos.x, pos.y);
+        toOriginMatrix.setTranslationMat(-pos.x, -pos.y);  //Set up "toOriginMatrix" matrix using values that translate vertex back to (0,0)
+        fromOriginMatrix.setTranslationMat(pos.x, pos.y);  //Set up "fromOriginMatrix" matrix using values that translate vertex back to initial position
 
-        rotateMatrix.setRotationMat(angle);
+        rotateMatrix.setRotationMat(angle);  //Set up the rotation matrix using angle parameter
 
         transformMatrix.setIdentity();
-        transformMatrix = fromOriginMatrix * rotateMatrix * toOriginMatrix;
+        transformMatrix = fromOriginMatrix * rotateMatrix * toOriginMatrix;  //Multiply from right to left
 
-        Transform();
+        Transform();  //Apply calculated transformation
     }
 
     private void Transform()

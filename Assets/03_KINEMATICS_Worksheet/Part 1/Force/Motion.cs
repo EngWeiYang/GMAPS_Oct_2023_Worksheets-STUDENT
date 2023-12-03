@@ -8,9 +8,11 @@ public class Motion : MonoBehaviour
   void FixedUpdate()
     {
         float dt = Time.fixedDeltaTime;
+
         float dx = Velocity.x * dt;
         float dy = Velocity.y * dt;
         float dz = Velocity.z * dt;
+
         transform.Translate(new Vector3(dx, dy, dz));
     }
 }
