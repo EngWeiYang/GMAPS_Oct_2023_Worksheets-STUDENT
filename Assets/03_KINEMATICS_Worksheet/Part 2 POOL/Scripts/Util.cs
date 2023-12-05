@@ -5,6 +5,7 @@ public class Util
 {
     public static float FindDistance(HVector2D p1, HVector2D p2)
     {
-        return Mathf.Sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
+        return Mathf.Sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));  //Calculate using difference in x and y coordinates between 2 points
+                                                                                           //and applying difference to magnitude formula
     }
 }
