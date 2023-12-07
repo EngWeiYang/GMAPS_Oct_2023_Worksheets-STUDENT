@@ -16,7 +16,7 @@ public class PoolCue : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); //Get mouse position while left click is held
+			var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);  //Get mouse position while left click is held
 
 			if (ball != null && ball.IsCollidingWith(mousePos.x, mousePos.y))  //If ball object exists and is clicked
 			{
@@ -33,7 +33,7 @@ public class PoolCue : MonoBehaviour
 			HVector2D v = new HVector2D(drawnLine.end - drawnLine.start);  //Set velocity of the white ball.
 			ball.Velocity = v;  //Update the velocity of the white ball.
 
-			drawnLine = null; //Reset drawnLine to null
+			drawnLine = null;  //Reset drawnLine to null
 		}
 
 		if (drawnLine != null)
